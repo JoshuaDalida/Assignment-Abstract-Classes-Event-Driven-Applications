@@ -1,0 +1,13 @@
+ReservatonManager
+	Finish Available seates
+		How do i know how much seats are taken?
+	JsonFile
+		the is the \r going to mess this up?
+	LoadFromFile
+		how do i make a string into the flight name and how is that going to affect the constructor
+
+FlightManager
+	Which list do i use/populate (the _flights or flights)
+
+Flight.razor
+	Need to make form uneditable 

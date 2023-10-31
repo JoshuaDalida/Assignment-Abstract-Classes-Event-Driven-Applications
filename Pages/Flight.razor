@@ -1,0 +1,192 @@
+﻿@using Traveless.Backend.Entites
+@using Traveless.Backend
+
+
+@page "/flight"
+<style>
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #FlightFinder {
+        width: 23%;
+        margin: 5px;
+    }
+
+    #FlightFinder input {
+        width: 100%;
+    }
+
+    #FlightFinder button {
+        width: 100%;
+        margin-top: 24px;
+        height: 30px;
+        border-radius:2px
+    }
+
+    #Flights {
+        width: 96%;
+        text-align: left;
+        background-color: white;
+        border-top-color: Lightgrey;
+        border-right-color: Lightgrey;
+        border-bottom-color: Lightgrey;
+        border-left-color: Lightgrey;}
+
+    #reservationInput
+    {
+        width: 98%;
+        text-align: left;
+    }
+
+    #reservationButton {
+        justify-content: center;
+        width: 200px;
+        height: 30px;
+        margin:10px;
+    }
+
+    #reservationSubmition {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    p {
+        text-align: center;
+    }
+
+    }
+
+</style>
+
+<h1>Flight Finder</h1>
+
+<form class="flex">
+    <div id="FlightFinder">
+        <label>From:</label><br>
+        <input type="text" placeholder="From" @bind="flightFrom">
+    </div>
+    <div id="FlightFinder">
+        <label>To:</label><br>
+        <input type="text" placeholder="To" @bind="flightTo">
+    </div>
+    <div id="FlightFinder">
+        <label>Day:</label><br>
+        <input type="text" placeholder="Day" @bind="flightDay">
+    </div>
+    <div id="FlightFinder">
+        <button @onclick="DisplayFlights" type="button">Find Flights</button>
+    </div>
+</form>
+
+<h1>Flights</h1>
+<ul id="Flights">
+    @foreach (Flights flight in searchFlights)
+    {
+        <button id="Flights" @onclick="() => fillForm(flight)">@flight.Code - From: @flight.From, To: @flight.To, Day: @flight.WeekDay</button>
+    }
+</ul>
+<br>
+
+    <h1>Reserve</h1>
+    <form class = "ReservationForm">
+        <label for="Flight code:">Flight code:</label><br />
+        <input id= "reservationInput" type="text" placeholder="Flight" @bind="reserveflightCode"><br />
+    
+        <label for="Airline">Airline:</label><br />
+        <input id = "reservationInput" type="text" placeholder="Airline" @bind="reserveflightAirline"><br />
+    
+        <label for="Day">Day:</label><br />
+        <input id = "reservationInput" type="text" placeholder="Day" @bind="reserveFlightDay"><br />
+    
+        <label for="Time">Time:</label><br />
+        <input id = "reservationInput" type="text" placeholder="Time" @bind="reserveflightTime"><br />
+    
+        <label for="Cost">Cost:</label><br />
+        <input id = "reservationInput" type="text" placeholder="0" @bind="reserveflightCostPerSeat"><br />
+    
+        <label for="Name">Name:</label><br />
+        <input id = "reservationInput" type="text" placeholder="Name" @bind = "reserveName">
+        <br />
+    
+        <label for="Citizenship">Citizenship:</label><br />
+        <input id = "reservationInput" type="text" placeholder="Citizenship" @bind = "reserveCitizenship">
+        <br />
+       
+    </form>
+    <div id="reservationSubmition">
+    <button id="reservationButton" type="button" @onclick="MakeReservation">Reservation</button>
+</div>
+<br />
+        <p>Reservation Code: @reservationCode</p>
+    
+
+
+@code {
+    //Managers
+    private FlightManager flightManager = new FlightManager();
+    private ReservationManager reservationManager = new ReservationManager();
+
+    //Flight list
+    private List<Flights> searchFlights = new List<Flights>();
+
+    //Find Flight
+    private string flightFrom;
+    private string flightTo;
+    private string flightDay;
+
+    //Reserve Flight
+    private string reserveFlightDay;
+    private string reservationCode;
+    private string reserveflightCode;
+    private string reserveflightAirline;
+    private string reserveflightTime;
+    private string reserveflightCostPerSeat;
+    private string reserveName;
+    private string reserveCitizenship;
+
+
+
+    private void DisplayFlights()
+    {
+        searchFlights.Clear(); // Clear existing search results
+
+        if (!string.IsNullOrWhiteSpace(flightFrom) && !string.IsNullOrWhiteSpace(flightTo) && !string.IsNullOrWhiteSpace(flightDay))
+        {
+            foreach (Flights flight in flightManager.Flight)
+            {
+                if (flightFrom == flight.From && flightTo == flight.To && flightDay == flight.WeekDay)
+                {
+                    searchFlights.Add(flight);
+                }
+            }
+        }
+    }
+
+    private void fillForm(Flights flight)
+    {
+        //an error message is displayed if no flight is selected, name is empty, citizenship is empty
+        reserveflightCode = flight.Code;
+        reserveflightAirline = flight.AirlineCode;
+        reserveFlightDay = flight.WeekDay;
+        reserveflightTime = flight.Time;
+        reserveflightCostPerSeat = $"{flight.CostPerSeat}";
+
+    }
+
+    private void MakeReservation()
+    {
+        //find flight flightmanager.flight
+        Flights flight = flightManager.FindFlightByCode(reserveflightCode);
+        //save it
+        //make a reservation 
+        reservationManager.MakeReservation(flight, reserveName, reserveCitizenship);
+        //An exception is thrown if the flight is completely booked, or the flight is null, or the name is empty/null, or the citizenship is empty/null. If there are no exceptions thrown a Reservation object is created, and returned by the method.
+        
+        //save it to reservation.csv
+
+    }
+}
+
