@@ -1,9 +1,5 @@
 ﻿using System;
-<<<<<<< HEAD
 namespace BlazorHybridApp.Traveless.Backend.Entites;
-=======
-namespace Traveless.Backend.Entites;
->>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
 public class Flights
 
 	// NEEDS BOTH EQUALS METHODS
@@ -35,16 +31,10 @@ public class Flights
 	
 	}
 
-<<<<<<< HEAD
 	public Flights(string code, string airlineCode, string from, string to, string weekday, string time, int seats, decimal costPerSeat)
 	{
 		Code = code;
 		AirlineCode = airlineCode;
-=======
-	public Flights(string code, string from, string to, string weekday, string time, int seats, decimal costPerSeat)
-	{
-		Code = code;
->>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
 		From = from;
 		To = to;
 		WeekDay = weekday;

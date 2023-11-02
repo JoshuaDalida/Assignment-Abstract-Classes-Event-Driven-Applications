@@ -7,11 +7,7 @@ ReservatonManager
 		how do i make a string into the flight name and how is that going to affect the constructor
 
 FlightManager
-<<<<<<< HEAD
 	Which list do i use/populate (the _flights or flights)
 
 Flight.razor
 	Need to make form uneditable 
-=======
-	Which list do i use/populate (the _flights or flights)
->>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
