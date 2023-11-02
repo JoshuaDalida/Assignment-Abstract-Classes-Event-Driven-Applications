@@ -7,7 +7,6 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.System;
 
 namespace BlazorHybridApp.Traveless.Backend
 {
@@ -24,7 +23,7 @@ namespace BlazorHybridApp.Traveless.Backend
                 }
                 
             }
-            Console.WriteLine("flight not found");
+         
             return null;
         }
 

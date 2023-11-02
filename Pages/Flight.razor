@@ -120,7 +120,7 @@
     <button id="reservationButton" type="button" @onclick="MakeReservation">Reservation</button>
 </div>
 <br />
-        <p>Reservation Code: @reservationCode</p>
+<p>Reservation Code: @reservationCode</p>
     
 
 
@@ -178,14 +178,40 @@
 
     private void MakeReservation()
     {
-        //find flight flightmanager.flight
-        Flights flight = flightManager.FindFlightByCode(reserveflightCode);
-        //save it
-        //make a reservation 
-        reservationManager.MakeReservation(flight, reserveName, reserveCitizenship);
-        //An exception is thrown if the flight is completely booked, or the flight is null, or the name is empty/null, or the citizenship is empty/null. If there are no exceptions thrown a Reservation object is created, and returned by the method.
-        
-        //save it to reservation.csv
+        //An exception is thrown (display alert)if the flight is completely booked, or the flight is null, or the name is empty/null, or the citizenship is empty/null. If there are no exceptions thrown a Reservation object is created, and returned by the method.
+        try
+        {
+            Flights flight = flightManager.FindFlightByCode(reserveflightCode);
+            if (flight == null)
+            {
+                
+                throw new Exception("Flight not found");
+            }
+
+            // Check if there are available seats
+            if (reservationManager.AvailableSeats(flight) <= 0)
+            {
+                throw new Exception("No available seats on the flight");
+            }
+
+            // Check if the name is empty or null
+            if (string.IsNullOrEmpty(reserveName))
+            {
+                throw new Exception("Name cannot be empty");
+            }
+
+            //make a reservation 
+            Reservation reservation = reservationManager.MakeReservation(flight.Code, reserveName, reserveCitizenship);
+            reservationCode = reservation.code;
+            reservationManager.Save();
+        }
+        catch (Exception ex)
+        {
+            // Handle the exceptions, e.g., display an alert
+            Console.WriteLine($"Reservation failed: {ex.Message}");
+            
+        }
+    //save it to reservation.csv
 
     }
 }

@@ -5,7 +5,7 @@ namespace BlazorHybridApp.Traveless.Backend.Entites;
 public class Reservation
 {
     private string citizenship;
-    private string code;
+    public string code;
     private bool isActive;
     private string name;
     private Flights flight;
