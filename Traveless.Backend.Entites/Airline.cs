@@ -1,5 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 namespace BlazorHybridApp.Traveless.Backend.Entites;
+=======
+namespace Traveless.Backend.Entites;
+>>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
 
 public class Airline
 {
@@ -16,6 +20,10 @@ public class Airline
 
     public override string ToString()
     {
+<<<<<<< HEAD
 		return $"{_code};{_name}";  
+=======
+		return $"{_code};{_name}";
+>>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
     }
 }

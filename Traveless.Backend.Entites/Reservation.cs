@@ -1,5 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 namespace BlazorHybridApp.Traveless.Backend.Entites;
+=======
+namespace Traveless.Backend.Entites;
+>>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
 
 //Needs to finish both equals methods
 public class Reservation
@@ -39,7 +43,11 @@ public class Reservation
 
     public override string ToString()
     {
+<<<<<<< HEAD
         return $"{code},{flight},{name},{citizenship},{isActive}";
+=======
+        return $"{code};{flight};{name};{citizenship};{isActive}";
+>>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
     }
 
 
