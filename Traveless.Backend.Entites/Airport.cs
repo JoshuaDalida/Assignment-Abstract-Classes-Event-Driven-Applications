@@ -1,5 +1,4 @@
 ﻿using System;
-<<<<<<< HEAD
 namespace BlazorHybridApp.Traveless.Backend.Entites;
 
 

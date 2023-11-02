@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlazorHybridApp.Traveless.Backend.Entites;
-=======
-using Traveless.Backend.Entites;
->>>>>>> 7ac5359e5aa13acbd74ef94776ffd15cfddbcecd
 
 namespace BlazorHybridApp.Traveless.Backend
 {
