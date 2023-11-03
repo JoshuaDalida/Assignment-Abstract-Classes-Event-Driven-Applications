@@ -40,7 +40,7 @@ namespace BlazorHybridApp.Traveless.Backend
             Flights flight = flightManager.FindFlightByCode(flightCode);
 
             
-            //generate random resCode
+            
             Random random = new Random();
             string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string digits = "0123456789";
@@ -50,7 +50,7 @@ namespace BlazorHybridApp.Traveless.Backend
 
 
             Reservation madeReservation = new Reservation(reservationCode, flight, name, citizenship,true);
-            _reservations.Add(madeReservation);
+            Reservations.Add(madeReservation);
             return madeReservation;
         }
         public string CSVFilePath
@@ -59,27 +59,21 @@ namespace BlazorHybridApp.Traveless.Backend
             {
                 
                 string currentDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = Path.Combine(currentDir, "JSON FILES\\reservation.csv");
+                string filePath = Path.Combine(currentDir, "BlazorHybridApp\\JSON FILES\\reservation.csv");
 
                 return filePath;
             }
         }
-        public string JSONFilePath
-        {
-            get
-            {
-                string currentDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = Path.Combine(currentDir, "JSON FILES\\reservation.json");
-
-                return filePath;
-            }
-        }
+       
 
         public void Save() 
         {
-            string encoded = JsonSerializer.Serialize(this.Reservations, this.Reservations.GetType());
-
-            File.WriteAllText(this.JSONFilePath, encoded);
+            string filePath = CSVFilePath;
+            using (StreamWriter writer = new StreamWriter(filePath))
+                foreach (Reservation reservation in Reservations)
+                {
+                    writer.WriteLine(reservation.ToString());
+                }
         }
 
         public ReservationManager() 
@@ -97,53 +91,26 @@ namespace BlazorHybridApp.Traveless.Backend
         {
             this._reservations.Clear();
 
-            
-            if (File.Exists(this.JSONFilePath))
-            {
-               
-                string contents = File.ReadAllText(this.JSONFilePath);
+            string[] lines = File.ReadAllLines(this.CSVFilePath);
 
-                
-                object reservationObj = JsonSerializer.Deserialize(contents, this._reservations.GetType());
+           foreach (string line in lines)
+           {
+                string[] coloums = line.Split(",");
 
-                List<Reservation> reservations = reservationObj as List<Reservation>;
-
-                
-                if (reservations == null)
-                {
-                    Console.WriteLine("Error", "Unable to decode from JSON file.", "OK");
-                    return;
-                }
-
-               
-                foreach (Reservation reservation in reservations)
-                {
-                    this._reservations.Add(reservation);
-                }
-            }
-            else
-            {
-               
-                string[] lines = File.ReadAllLines(this.CSVFilePath);
-
-                foreach (string line in lines)
-                {
-                    string[] coloums = line.Split(",");
-
-                    Flights flight = new Flights();
+                Flights flight = new Flights();
                     
-                    Reservation reservation = new Reservation
-                    (
-                       coloums[0],//code
-                       flight, //flight
-                       coloums[2], //name
-                       coloums[3], //citizenship
-                       bool.Parse(coloums[4])// isActive
-                    );
+                Reservation reservation = new Reservation
+                (
+                coloums[0],//code
+                flight, //flight
+                coloums[2], //name
+                coloums[3], //citizenship
+                bool.Parse(coloums[4])// isActive
+           );
 
-                    _reservations.Add(reservation);
-                }
-            }
+           _reservations.Add(reservation);
+           }
+            
 
 
         }

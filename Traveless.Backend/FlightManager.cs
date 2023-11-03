@@ -34,14 +34,22 @@ namespace BlazorHybridApp.Traveless.Backend
 
         public IList<Flights> Flight { get; }
 
-        private string FLIGHTS_FILE = "C:\\Users\\joshu\\OneDrive\\Desktop\\BlazorHybridApp\\JSON FILES\\flights.csv";
+        public string CSVFilePath
+        {
+            get
+            {
+                string basePath = AppDomain.CurrentDomain.BaseDirectory; // or System.AppContext.BaseDirectory;
+                string filePath = Path.Combine(basePath, "Data\\employees.csv");
+                return filePath;
+            }
+        }
 
         protected List<Flights> _flights;
 
         protected List <Flights> LoadFlights() 
         {
             List<Flights> flights = new List<Flights>();
-            string[] data = File.ReadAllLines(FLIGHTS_FILE);
+            string[] data = File.ReadAllLines(CSVFilePath);
             foreach (string line in data)
             {
                 string[] coloums = line.Split(",");
