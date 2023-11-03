@@ -11,6 +11,9 @@ namespace BlazorHybridApp.MakeReservationException
 
         public MakeReservationException() { }
 
-        public MakeReservationException(string message) : base(message) { }
+        public MakeReservationException(string message) : base("Invalid Reservation") 
+        {
+        
+        }
     }
 }

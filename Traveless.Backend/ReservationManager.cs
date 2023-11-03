@@ -59,7 +59,7 @@ namespace BlazorHybridApp.Traveless.Backend
             {
                 
                 string currentDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = Path.Combine(currentDir, "BlazorHybridApp\\JSON FILES\\reservation.csv");
+                string filePath = Path.Combine(currentDir, "C:\\Users\\joshu\\OneDrive\\Desktop\\BlazorHybridApp\\JSON FILES\\reservation.csv");
 
                 return filePath;
             }
@@ -79,6 +79,7 @@ namespace BlazorHybridApp.Traveless.Backend
         public ReservationManager() 
         {
             _reservations = new List<Reservation>();
+            LoadFromFile();
         }
 
         public IList<Reservation> Reservations
@@ -89,7 +90,7 @@ namespace BlazorHybridApp.Traveless.Backend
         protected List<Reservation> _reservations; 
         protected void LoadFromFile()
         {
-            this._reservations.Clear();
+            
 
             string[] lines = File.ReadAllLines(this.CSVFilePath);
 
@@ -108,7 +109,7 @@ namespace BlazorHybridApp.Traveless.Backend
                 bool.Parse(coloums[4])// isActive
            );
 
-           _reservations.Add(reservation);
+           Reservations.Add(reservation);
            }
             
 
