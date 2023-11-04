@@ -39,7 +39,7 @@ namespace BlazorHybridApp.Traveless.Backend
             get
             {
                 string basePath = AppDomain.CurrentDomain.BaseDirectory; // or System.AppContext.BaseDirectory;
-                string filePath = Path.Combine(basePath, "C:\\Users\\joshu\\OneDrive\\Desktop\\BlazorHybridApp\\JSON FILES\\flights.csv");
+                string filePath = Path.Combine(basePath, "JSON FILES\\flights.csv");
                 return filePath;
             }
         }
